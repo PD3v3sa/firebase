@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <title>Firebase CRUD</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+
+
+</head>
+
+    <script type="module">
+      //import { initializeApp } from 'firebase/app';
+     //  import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+
+        // Import the functions you need from the SDKs you need
+       // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyCiO2pDZEjVVz6BiuhzLlONCvE7kg191wg",
+          authDomain: "iessalvadorgadea-364bf.firebaseapp.com",
+          projectId: "iessalvadorgadea-364bf",
+          storageBucket: "iessalvadorgadea-364bf.appspot.com",
+          messagingSenderId: "695203611384",
+          appId: "1:695203611384:web:6aeab8a9684d90ba49310d"
+        };
+      
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    
+        var db = firebase.firestore();
+
+db.collection("users").onSnapshot((querySnapshot) => {
+  document.getElementById("lista").innerHTML= '';
+    querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data().nom}`);
+        document.getElementById("lista").innerHTML += `<tr>
+                              <td>${doc.id}</td>
+                              <td>${doc.data().nom}</td>
+                              <td>${doc.data().cognom}</td>
+                             
+                              <td><button class="btn btn-danger btn-sm" onclick="eliminar('${doc.id}')">Eliminar</button></td>
+                              <td><button class="btn btn-warning btn-sm" onclick="editar('${doc.id}','${doc.data().first}','${doc.data().last}','${doc.data().born}')">Editar</button></td>
+
+                          </tr>`;
+    });
+});
+db.collection("posicion").onSnapshot((querySnapshot) => {
+  document.getElementById("lista").innerHTML= '';
+    querySnapshot.forEach((doc) => {
+     
+        console.log(`${doc.id} => ${doc.data().nom}`);
+        document.getElementById("lista").innerHTML += `<tr>
+                              <td>${doc.id}</td>
+                              <td>${doc.data().posicion.latitude}</td>
+                              <td>${doc.data().posicion.longitude}</td>
+                             
+                              <td><button class="btn btn-danger btn-sm" onclick="eliminar('${doc.id}')">Eliminar</button></td>
+                              <td><button class="btn btn-warning btn-sm" onclick="editar('${doc.id}','${doc.data().first}','${doc.data().last}','${doc.data().born}')">Editar</button></td>
+
+                          </tr>`;
+    });
+});
+
+        
+      </script>
+   <body>
+    <table  class="table table-dark">
+      <thead>
+        <th scope="col">id</th>
+        <th scope="col">nom</th>
+        <th scope="col">cognom</th>
+        <th scope="col">fnac</th>
+        
+      </thead>
+      <tbody id="lista"></tbody>
+    </table>
+   </body> 
+
+</html>
