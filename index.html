@@ -73,16 +73,20 @@ db.collection("posicion").add({
   });
 });
 
-var fecha;
+
 
 db.collection("posicion").onSnapshot((querySnapshot) => {
   document.getElementById("lista").innerHTML= '';
     querySnapshot.forEach((doc) => {
-      fecha=doc.data().Fecha;
-      let formattedTime = doc.data().Fecha.toDate();
+     
+      let formattedTime = fecha(doc.data().Fecha.toDate());
+      let formattedHour = hora(doc.data().Fecha.toDate());
+
+     // formattedTime = doc.data().Fecha.toDate().getDate()+"/"+doc.data().Fecha.toDate().getMonth()+"/"+doc.data().Fecha.toDate().getFullYear();
         document.getElementById("lista").innerHTML += `<tr>
-                              <td>${doc.id}</td>
+                             
                               <td>${formattedTime}</td>
+                              <td>${formattedHour}</td>
                               <td>${doc.data().posicion.latitude}</td>
                               <td>${doc.data().posicion.longitude}</td>
                               
@@ -96,6 +100,24 @@ function eliminar(id){
   }).catch(function(error) {
       console.error("Error removing document: ", error);
   });
+}
+function fecha(data){
+  var dia;
+  var mes;
+   if(data.getDate()<10)
+    dia="0"+data.getDate();
+   else
+     dia=data.getDate();
+
+  if(data.getMonth()<10)
+  mes="0"+data.getMonth();
+  else
+  mes=data.getMonth();
+
+  return dia+"/"+mes+"/"+data.getFullYear();
+}
+function hora(data){
+  return data.getHours()+":"+data.getMinutes()+":"+data.getSeconds();
 }
       </script>
    <body>
