@@ -53,7 +53,10 @@ lon=position.coords.longitude;
 
 
 let now = new Date();
-  
+
+   
+
+
 db.collection("posicion").add({
  
   Fecha: firebase.firestore.Timestamp.fromDate(now),//firebase.firestore.FieldValue.serverTimestamp(),
@@ -75,11 +78,13 @@ db.collection("posicion").add({
 db.collection("posicion").onSnapshot((querySnapshot) => {
   document.getElementById("lista").innerHTML= '';
     querySnapshot.forEach((doc) => {
-     
+  
+
       let formattedTime = fecha(doc.data().Fecha.toDate());
       let formattedHour = hora(doc.data().Fecha.toDate());
 
      // formattedTime = doc.data().Fecha.toDate().getDate()+"/"+doc.data().Fecha.toDate().getMonth()+"/"+doc.data().Fecha.toDate().getFullYear();
+     // if(formattedTime=="03/03/2023")
         document.getElementById("lista").innerHTML += `<tr>
                              
                               <td>${formattedTime}</td>
@@ -101,20 +106,43 @@ function eliminar(id){
 function fecha(data){
   var dia;
   var mes;
+  const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
    if(data.getDate()<10)
     dia="0"+data.getDate();
    else
      dia=data.getDate();
 
-  if(data.getMonth()<10)
-  mes="0"+data.getMonth();
+     
+ /* if(data.getMonth()<10)
+  mes=data.getMonth()+1;
   else
   mes=data.getMonth();
 
-  return dia+"/"+mes+"/"+data.getFullYear();
+  console.log(mes);*/
+  mes = month[data.getMonth()];
+
+  return dia+"/"+mes.toString()+"/"+data.getFullYear();
 }
 function hora(data){
-  return data.getHours()+":"+data.getMinutes()+":"+data.getSeconds();
+  var hora,min,seg;
+
+  if(data.getHours()<10)
+   hora="0"+data.getHours();
+   else
+   hora=data.getHours();
+
+   if(data.getMinutes()<10)
+   min="0"+data.getMinutes();
+   else
+   min=data.getMinutes();
+
+   if(data.getSeconds()<10)
+   seg="0"+data.getSeconds();
+   else
+   seg=data.getSeconds();
+
+  return hora+":"+min+":"+seg;
 }
       </script>
    <body>
