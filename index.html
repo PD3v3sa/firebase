@@ -55,10 +55,7 @@ lon=position.coords.longitude;
 let now = new Date();
   
 db.collection("posicion").add({
-  //const posicion: new GeoPosition(position.coords.latitude,position.coords.longitude)
- /* posicion.Latitud:position.coords.latitude,
-  posicion.Longitud:position.coords.longitude*/
-  
+ 
   Fecha: firebase.firestore.Timestamp.fromDate(now),//firebase.firestore.FieldValue.serverTimestamp(),
   posicion: new firebase.firestore.GeoPoint(lat,lon)
 
