@@ -54,7 +54,7 @@ lon=position.coords.longitude;
 
 let now = new Date();
 
-   
+
 
 
 db.collection("posicion").add({
@@ -84,7 +84,7 @@ db.collection("posicion").onSnapshot((querySnapshot) => {
       let formattedHour = hora(doc.data().Fecha.toDate());
 
      // formattedTime = doc.data().Fecha.toDate().getDate()+"/"+doc.data().Fecha.toDate().getMonth()+"/"+doc.data().Fecha.toDate().getFullYear();
-     // if(formattedTime=="03/03/2023")
+     if(doc.data().Fecha.toDate().getDate()==new Date().getDate())
         document.getElementById("lista").innerHTML += `<tr>
                              
                               <td>${formattedTime}</td>
@@ -148,8 +148,9 @@ function hora(data){
    <body>
    
     <table  class="table table-dark">
-      <thead>
+      <thead class="thead-light">
         <th scope="col">Fecha</th>
+        <th scope="col">Hora</th>
         <th scope="col">Lat</th>
         <th scope="col">Lon</th>
         
